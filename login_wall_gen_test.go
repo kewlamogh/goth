@@ -31,7 +31,7 @@ func TestLoginWall(t *testing.T) {
 
 	client.Database("goth").Collection("users").InsertOne(ctx, user)
 	defer close()
-	loginWall := GenLoginWall(func (_ http.ResponseWriter) {
+	loginWall := GenLoginWall(func (_ http.ResponseWriter, _ *http.Request) {
 		message = "not authed"
 	})
 

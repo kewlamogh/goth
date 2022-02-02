@@ -7,13 +7,13 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func GenLoginWall(ifNotAuthed func(http.ResponseWriter)) func(http.ResponseWriter, *http.Request) bool {
+func GenLoginWall(ifNotAuthed func(http.ResponseWriter, *http.Request)) func(http.ResponseWriter, *http.Request) bool {
 	return func(w http.ResponseWriter, r *http.Request) bool {		
 		token, _ := r.Cookie("token")
 		username, _ := r.Cookie("username")
 
 		if token == nil || username == nil {
-			ifNotAuthed(w)
+			ifNotAuthed(w, r)
 			return false
 		}
 
@@ -22,12 +22,12 @@ func GenLoginWall(ifNotAuthed func(http.ResponseWriter)) func(http.ResponseWrite
 		})
 
 		if !ok {
-			ifNotAuthed(w)
+			ifNotAuthed(w, r)
 			return false
 		}
 
 		if !(user.Token == token.Value) {
-			ifNotAuthed(w)
+			ifNotAuthed(w, r)
 			return false
 		}
 		
