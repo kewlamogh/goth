@@ -1,0 +1,15 @@
+<form action="/login" method="post">
+    <input name="username" placeholder="username" />
+    <input name="password" placeholder="password" />
+    <button type="submit">submit</button>
+</form>
+
+<div id = "err"></div>
+<script>
+    const div = document.querySelector("#err");
+    let paramString = window.location.href.split('?')[1];
+    console.log(paramString)
+    const q = new URLSearchParams(paramString)
+
+    div.innerHTML = q.get("err")
+</script>
