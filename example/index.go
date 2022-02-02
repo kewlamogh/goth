@@ -4,11 +4,13 @@ import (
 	"goth"
 	"net/http"
 	"os"
+	"github.com/joho/godotenv"
 )
 
 
 func main() {
-	goth.SetURI("mongodb+srv://jjj:L011yp0ppz@cluster0.olg0x.mongodb.net/myFirstDatabase?authSource=admin&replicaSet=atlas-12s1h0-shard-0&w=majority&readPreference=primary&retryWrites=true&ssl=true")
+	godotenv.Load(".env")
+	goth.SetURI(os.Getenv("uri"))
 
 	var loginwall = goth.GenLoginWall(func (writer http.ResponseWriter, r *http.Request) {
 		http.Redirect(writer, r, "/login", http.StatusFound)
