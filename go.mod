@@ -1,4 +1,4 @@
-module goth
+module github.com/kewlamogh/goth
 
 go 1.17
 

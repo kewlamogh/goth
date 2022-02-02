@@ -1,7 +1,7 @@
 package main
 
 import (
-	"goth"
+	"github.com/kewlamogh/goth"
 	"net/http"
 	"os"
 	"github.com/joho/godotenv"
