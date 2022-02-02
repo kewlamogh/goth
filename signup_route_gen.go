@@ -33,7 +33,7 @@ func GenSignupRoute(serve func(http.ResponseWriter), getSignupData func (*http.R
 
 				successfullyCreated(writer, r)
 			} else {
-				withoutQuery := strings.Split(r.URL.Host, "?")[0]
+				withoutQuery := strings.Split(r.URL.String(), "?")[0]
 				http.Redirect(writer, r, withoutQuery+"?err=username taken", http.StatusFound)
 			}
 		} else {

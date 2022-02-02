@@ -1,6 +1,7 @@
 package goth
 
 import (
+	"fmt"
 	"net/http"
 	"strings"
 
@@ -35,7 +36,9 @@ func GenLoginRoute(serve func(writer http.ResponseWriter), getLoginData func(*ht
 
 				afterAuthed(writer, r)
 			} else {
-				withoutQuery := strings.Split(r.URL.Host, "?")[0]
+				withoutQuery := strings.Split(r.URL.String(), "?")[0]
+				fmt.Println(r.URL.String())
+				fmt.Println(withoutQuery+"?err="+err.Error())
 				http.Redirect(writer, r, withoutQuery+"?err="+err.Error(), http.StatusFound)
 			}
 		} else {
