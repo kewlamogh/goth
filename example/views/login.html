@@ -1,0 +1,33 @@
+<style>
+    @import url(https://fonts.googleapis.com/css?family=Roboto:100,100italic,300,300italic,regular,italic,500,500italic,700,700italic,900,900italic);
+
+    * {
+        font-family: 'Roboto';
+    }
+
+    form>* {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    #err {
+        padding: 20px;
+        background-color: rgb(190, 10, 10);
+    }
+</style>
+
+<form action="/login" method="post">
+    <input name="username" placeholder="username" />
+    <input name="password" placeholder="password" />
+    <button type="submit">submit</button>
+</form>
+
+<div id = "err"></div>
+<script>
+    const div = document.querySelector("#err");
+    let paramString = window.location.href.split('?')[1];
+    console.log(paramString)
+    const q = new URLSearchParams(paramString)
+
+    div.innerHTML = q.get("err") || "no error so far"
+</script>
