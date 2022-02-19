@@ -7,17 +7,18 @@ import (
 	"gotest.tools/assert"
 )
 
+
 /*
 Tests the User Data feature.
 
 
-NOTE: 
+NOTE:
 When running or debugging this test, you should have a test_config.env file in your development folder.
 The test_config.env should have the uri environment variable defined with a working MongoDB URI. (place your real URI, that file is in the .gitignore)
 */
 func TestUserData(t *testing.T) {
 	type data = struct {
-		data map[string]interface{} `json:"data"`
+		Data map[string]interface{} `json:"data"`
 	}
 
 	datahandle := NewDataHandle(bson.D{
@@ -33,7 +34,7 @@ func TestUserData(t *testing.T) {
 	var x data
 	client.Database("goth").Collection("userdata").FindOne(ctx, datahandle.filter).Decode(&x)
 
-	v := x.data["x"]
+	v := x.Data["x"]
 	assert.Equal(t, v, "y")
 
 	client.Database("goth").Collection("userdata").DeleteMany(ctx, datahandle.filter)

@@ -11,7 +11,7 @@ type UserDataHandle struct {
 
 func NewDataHandle(filter bson.D) (UserDataHandle) {
 	type data = struct{
-		data map[string]interface{} `json:"data"`
+		Data map[string]interface{} `json:"data"`
 	}
 
 	client, ctx, close := connectToMongoDB()
@@ -27,8 +27,8 @@ func NewDataHandle(filter bson.D) (UserDataHandle) {
 	d.filter = filter
 	d.data = map[string]interface{}{}
 
-	if r.data != nil {
-		for k, v := range r.data {
+	if r.Data != nil {
+		for k, v := range r.Data {
 			d.data[k] = v
 		}
 	}
