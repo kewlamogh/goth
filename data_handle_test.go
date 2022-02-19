@@ -7,7 +7,6 @@ import (
 	"gotest.tools/assert"
 )
 
-
 /*
 Tests the User Data feature.
 

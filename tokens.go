@@ -21,6 +21,6 @@ type Token struct {
 
 /* Checks if the token is valid. */
 func (t Token) IsEqualToTokenOf(username string, password string) (bool, error) {
-	err := bcrypt.CompareHashAndPassword([]byte(t.Token), []byte(username+password))	
+	err := bcrypt.CompareHashAndPassword([]byte(t.Token), []byte(username+password))
 	return err == nil, err
 }
