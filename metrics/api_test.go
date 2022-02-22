@@ -1,4 +1,4 @@
-package main
+package metrics
 
 import (
 	"testing"
@@ -56,7 +56,7 @@ func TestGetNumberOfHitsToProtectedRoutesInMonth(t *testing.T) {
 			primitive.E{Key: "time", Value: "Aruary"},
 			primitive.E{Key: "type", Value: "hitProtectedRoute"},
 			primitive.E{Key: "is_test", Value: true},
-		}, 	want: 1 },
+		}, want: 1},
 	}
 
 	for _, tt := range tests {

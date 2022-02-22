@@ -1,4 +1,4 @@
-package main
+package metrics
 
 import (
 	"go.mongodb.org/mongo-driver/bson"
@@ -17,8 +17,8 @@ func GetNumberOfHitsToProtectedRoutesInMonth(month string) int64 {
 	defer close()
 
 	res, err := client.Database("goth").Collection("metrics").CountDocuments(ctx, bson.D{
-		primitive.E{ Key: "time", Value: month },
-		primitive.E{ Key: "type", Value: "hitProtectedRoute" },
+		primitive.E{Key: "time", Value: month},
+		primitive.E{Key: "type", Value: "hitProtectedRoute"},
 	})
 
 	checkError(err)
