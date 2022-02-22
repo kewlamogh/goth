@@ -3,3 +3,4 @@ login_architecture.png
 .vscode/*
 out/*
 metrics/.env
+.vs
