@@ -1,10 +1,11 @@
-package metrics
+package main
 
 import (
 	"fmt"
 	"testing"
 	"time"
 )
+
 /*
 Tests the server startup.
 

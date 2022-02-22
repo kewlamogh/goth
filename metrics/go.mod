@@ -1,4 +1,4 @@
-module github.com/kewlamogh/goth/metrics
+module github.com/kewlamogh/goth/main
 
 go 1.17
 

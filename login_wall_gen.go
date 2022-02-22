@@ -1,8 +1,9 @@
 package goth
 
 import (
-	"fmt"
 	"net/http"
+	"time"
+
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	_ "golang.org/x/crypto/bcrypt"
@@ -13,8 +14,8 @@ func GenLoginWall(ifNotAuthed func(http.ResponseWriter, *http.Request)) func(htt
 	return func(w http.ResponseWriter, r *http.Request) bool {		
 		token, _ := r.Cookie("token")
 		username, _ := r.Cookie("username")
-
-		fmt.Println(r.Cookies())
+		client, ctx, close := connectToMongoDB()
+		defer close()
 
 		if token == nil || username == nil {
 			ifNotAuthed(w, r)
@@ -34,6 +35,11 @@ func GenLoginWall(ifNotAuthed func(http.ResponseWriter, *http.Request)) func(htt
 			ifNotAuthed(w, r)
 			return false
 		}
+
+		client.Database("goth").Collection("metrics").InsertOne(ctx, bson.D{
+			primitive.E{ Key: "time", Value: time.Now().Month().String() },
+			primitive.E{ Key: "type", Value: "hitProtectedRoute" },
+		})
 		
 		return true
 	}
