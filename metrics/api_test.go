@@ -2,7 +2,6 @@ package metrics
 
 import (
 	"testing"
-
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
@@ -43,20 +42,18 @@ The test_config.env should have the uri environment variable defined with a work
 */
 func TestGetNumberOfHitsToProtectedRoutesInMonth(t *testing.T) {
 	type args struct {
-		month string
+		month MonthData
 	}
 
 	tests := []struct {
 		name      string
 		args      args
 		want      int64
-		dummyData bson.D
 	}{
-		{name: "example feb test case", args: args{month: "February"}, dummyData: bson.D{
-			primitive.E{Key: "time", Value: "Aruary"},
-			primitive.E{Key: "type", Value: "hitProtectedRoute"},
-			primitive.E{Key: "is_test", Value: true},
-		}, want: 1},
+		{name: "example ar test case", args: args{month: MonthData{
+			Month: "Aruary",
+			Year: 1212,
+		}}, want: 1},	
 	}
 
 	for _, tt := range tests {
@@ -64,13 +61,22 @@ func TestGetNumberOfHitsToProtectedRoutesInMonth(t *testing.T) {
 			client, ctx, close := connectToMongoDB()
 			defer close()
 
-			client.Database("goth").Collection("metrics").InsertOne(ctx, tt.dummyData)
+			client.Database("goth").Collection("metrics").InsertOne(ctx, bson.D{
+				primitive.E{ Key: "month", Value: tt.args.month.Month },
+				primitive.E{ Key: "year", Value: tt.args.month.Year },
+				primitive.E{ Key: "hits", Value: 1 },
+				primitive.E{ Key: "is_test", Value: true },
+			})
 
 			if got := GetNumberOfHitsToProtectedRoutesInMonth(tt.args.month); got != tt.want {
 				t.Errorf("GetNumberOfHitsToProtectedRoutesInMonth() = %v, want %v", got, tt.want)
 			}
 
-			client.Database("goth").Collection("metrics").DeleteMany(ctx, tt.dummyData)
+			client.Database("goth").Collection("metrics").DeleteMany(ctx, bson.D{
+				primitive.E{ Key: "month", Value: tt.args.month.Month },
+				primitive.E{ Key: "year", Value: tt.args.month.Year },
+				primitive.E{ Key: "is_test", Value: true },
+			})
 		})
 	}
 }

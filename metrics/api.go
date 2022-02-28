@@ -5,6 +5,23 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
+// Data model for which is stored every day in the database
+type DayData struct {
+	Year uint32 `json:"year"`
+	Month string `json:"month"`
+	Day uint32 `json:"day"`
+	Hits int `json:"hits"`
+}
+
+// Month data is stored every month in the database
+// when the granular DayData is scrapped.
+type MonthData struct {
+	Year uint32 `json:"year"`
+	Month string `json:"month"`
+	Hits int `json:"hits"`
+}
+
+// Returns the total number of users.
 func TotalUsers() int64 {
 	client, ctx, close := connectToMongoDB()
 	defer close()
@@ -12,15 +29,24 @@ func TotalUsers() int64 {
 	return amnt
 }
 
-func GetNumberOfHitsToProtectedRoutesInMonth(month string) int64 {
+// Gets the number of hits to a protected route in a given month.
+func GetNumberOfHitsToProtectedRoutesInMonth(data MonthData) int64 {
 	client, ctx, close := connectToMongoDB()
+	hits := 0
+
 	defer close()
 
-	res, err := client.Database("goth").Collection("metrics").CountDocuments(ctx, bson.D{
-		primitive.E{Key: "time", Value: month},
-		primitive.E{Key: "type", Value: "hitProtectedRoute"},
+	cur, _ := client.Database("goth").Collection("metrics").Find(ctx, bson.D{
+		primitive.E{ Key: "month", Value: data.Month },
+		primitive.E{ Key: "year", Value: data.Year },
 	})
 
-	checkError(err)
-	return res
+	for cur.Next(ctx) {
+		var d DayData
+		cur.Decode(&d)
+
+		hits += d.Hits
+	}
+	
+	return int64(hits)
 }

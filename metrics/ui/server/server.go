@@ -14,7 +14,11 @@ func StartServer() {
 	})
 
 	http.HandleFunc("/api/hitsPerMonth", func(w http.ResponseWriter, r *http.Request) {
-		hits := metrics.GetNumberOfHitsToProtectedRoutesInMonth(r.URL.Query().Get("month"))
+		hits := metrics.GetNumberOfHitsToProtectedRoutesInMonth(struct {
+			Month string
+			Year string
+			Pwn string
+		}{})
 
 		w.Header().Set("Content-Type", "application/json")
 		w.Write([]byte(fmt.Sprint(hits)))
@@ -25,11 +29,14 @@ func StartServer() {
 		if err != nil {
 			panic(err)
 		}
-		
 
 		w.Header().Set("Content-Type", "text/html")
 		w.Write(content)
 	})
 
 	http.ListenAndServe(":3000", nil)
+}
+
+func main() {
+	StartServer()
 }

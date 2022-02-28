@@ -26,7 +26,7 @@
 
 <div class="dataPoint">
     <p>Visits to authenticated routes this month</p>
-    <h1>0</h1>
+    <h1 id = "hits_this_month">0</h1>
 </div>
 
 <div class="dataPoint">
@@ -46,22 +46,36 @@
             document.getElementById("userCount").innerText = await v.text()
         })
 
+        const currDate = new Date()
         const r = JSON.parse(await (await fetch(
-            "/api/hitsPerMonth?month=February"
+            `/api/hitsPerMonth?month=${[
+                "January",
+                "February",
+                "March",
+                "April",
+                "May",
+                "June",
+                "July",
+                "August",
+                "September",
+                "October",
+                "November",
+                "December"
+            ][currDate.getMonth()]}`
         )).text())
 
-        console.log(r)
+        document.getElementById("hits_this_month").innerText = r
 
         JSC.Chart("chartDiv", {
             series: [{
-                points: [{ x: "January", y: 0 }, { x: "February", y: r }, { x: "March", y: 7 }, { x: "April", y: 25 }, { x:
+                points: [{ x: "January", y: 0 }, { x: "February", y: 21 }, { x: "March", y: 7 }, { x: "April", y: 25 }, { x:
                 "May", y: 10 }, { x: "June", y: 10 }]
             }]
         });
 
         JSC.Chart("chartDiv2", {
             series: [{
-                points: [{ x: "January", y: 0 }, { x: "February", y: r }, { x: "March", y: 2 }, { x: "April", y: 4 }, { x:
+                points: [{ x: "January", y: 0 }, { x: "February", y: 21 }, { x: "March", y: 2 }, { x: "April", y: 4 }, { x:
                 "May", y: 9 }, { x: "June", y: 9 }]
             }]
         });

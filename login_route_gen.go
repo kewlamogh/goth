@@ -11,7 +11,7 @@ import (
 type LoginData struct {
 	// The username provided to the login route.
 	Username string
-	// The password provided to the login route. This password is only used to generate the token for authentication.
+	// The password provided to the login route. This password is only used to generate the token for authentication, then is deleted.
 	Password string
 }
 

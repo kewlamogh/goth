@@ -1,5 +1,12 @@
+
 # goth
 An easy to use web authorization system for MongoDB.
+
+---
+```go
+
+```
+---
 
 Written 100% in Golang!
 # Contributing

@@ -3,3 +3,5 @@ login_architecture.png
 .vscode/*
 out/*
 metrics/.env
+metrics/test_config.env
+gothworkspace.code-workspace
