@@ -21,7 +21,7 @@ type MonthData struct {
 	Hits int `json:"hits"`
 }
 
-// Returns the total number of users.
+// Returns the total number of users in the goth/users MongoDB collection.
 func TotalUsers() int64 {
 	client, ctx, close := connectToMongoDB()
 	defer close()

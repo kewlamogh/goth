@@ -5,7 +5,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-// Internal list of months.
+// Internal list of months:
 var months = []string{
 	"January",
 	"February",
@@ -40,6 +40,7 @@ func ChangeGranularityOfOldHitMetrics(now MonthData) {
 	for i, v := range months {
 		if v == month {
 			target = months[oldIndex]
+			break
 		}
 
 		oldIndex = i
