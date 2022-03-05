@@ -2,11 +2,12 @@ module example_goth_api_ui
 
 go 1.17
 
+require github.com/kewlamogh/goth/metrics v0.0.0-20220228020840-7580ecb1a1fc
+
 require (
 	github.com/go-stack/stack v1.8.1 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
 	github.com/joho/godotenv v1.4.0 // indirect
-	github.com/kewlamogh/goth/metrics v0.0.0-20220222213417-0c9b0692a68b
 	github.com/klauspost/compress v1.14.4 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/xdg-go/pbkdf2 v1.0.0 // indirect

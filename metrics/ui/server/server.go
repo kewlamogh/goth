@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"time"
+
 	"github.com/kewlamogh/goth/metrics"
 )
 
@@ -14,11 +16,11 @@ func StartServer() {
 	})
 
 	http.HandleFunc("/api/hitsPerMonth", func(w http.ResponseWriter, r *http.Request) {
-		hits := metrics.GetNumberOfHitsToProtectedRoutesInMonth(struct {
-			Month string
-			Year string
-			Pwn string
-		}{})
+		now := time.Now()
+		hits := metrics.GetNumberOfHitsToProtectedRoutesInMonth(metrics.MonthData{
+			Month: now.Month().String(),
+			Year: uint32(now.Year()),
+		})
 
 		w.Header().Set("Content-Type", "application/json")
 		w.Write([]byte(fmt.Sprint(hits)))
