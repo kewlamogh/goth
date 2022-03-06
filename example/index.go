@@ -32,7 +32,7 @@ func main() {
 		http.Redirect(w, r, "/", http.StatusFound)
 	})
 
-	var signuproute = goth.GenSignupRoute(func (w http.ResponseWriter) {
+	var signuproute = goth.GenSignupRoute(func (w http.ResponseWriter, _ *http.Request) {
 		content, err := os.ReadFile("views/signup.html")
 		if err != nil {
 			panic(err)

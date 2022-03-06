@@ -16,7 +16,7 @@ type SignupData struct {
 }
 
 // Generates a signup route to be used as the http handler for the /signup route
-func GenSignupRoute(serve func(http.ResponseWriter), getSignupData func (*http.Request) SignupData, successfullyCreated func(http.ResponseWriter, *http.Request)) func(writer http.ResponseWriter, r *http.Request) {
+func GenSignupRoute(serve http.HandlerFunc, getSignupData func (*http.Request) SignupData, successfullyCreated func(http.ResponseWriter, *http.Request)) func(writer http.ResponseWriter, r *http.Request) {
 	return func(writer http.ResponseWriter, r *http.Request) {
 		if r.Method == "POST" {
 			data := getSignupData(r)
@@ -37,7 +37,7 @@ func GenSignupRoute(serve func(http.ResponseWriter), getSignupData func (*http.R
 				http.Redirect(writer, r, withoutQuery+"?err=username taken", http.StatusFound)
 			}
 		} else {
-			serve(writer)
+			serve(writer, r)
 		}
 	}
 }

@@ -28,7 +28,7 @@ func TestSignupRoute(t *testing.T) {
 	client.Database("goth").Collection("users").DeleteMany(ctx, user)
 	close()
 
-	signupRoute := GenSignupRoute(func (_ http.ResponseWriter) {
+	signupRoute := GenSignupRoute(func (_ http.ResponseWriter, _ *http.Request) {
 		message = "Client side UI loaded."
 	}, func (r *http.Request) SignupData {
 		data := SignupData{
