@@ -4,11 +4,13 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 )
 
+// A data handle which you can use to edit and get user data. 
 type UserDataHandle struct {
 	data map[string]interface{}
 	filter bson.D
 }
 
+// Generates a data handle based on the users after filtering by filter.
 func NewDataHandle(filter bson.D) (UserDataHandle) {
 	type data = struct{
 		Data map[string]interface{} `json:"data"`
@@ -36,10 +38,12 @@ func NewDataHandle(filter bson.D) (UserDataHandle) {
 	return d
 }
 
+// Returns the data handle (a pointer to a Go dictionary)
 func (u *UserDataHandle) GetDataHandle() *map[string]interface{} {
 	return &u.data
 }
 
+// Pushes modifications to the database.
 func (u *UserDataHandle) Push() {
 	client, ctx, close := connectToMongoDB()
 	l := bson.D{
