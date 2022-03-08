@@ -7,11 +7,23 @@ import (
 	goenv "github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+	"github.com/kewlamogh/goth/metrics"
 )
 
 var URI = (func() string {
 	goenv.Load("test_config.env")
 	return os.Getenv("uri")
+})()
+
+var _ = (func () int { // runs this code on goth import	
+	now := time.Now()
+
+	metrics.ChangeGranularityOfOldHitMetrics(metrics.MonthData{
+		Month: now.Month().String(),
+		Year: uint32(now.Year()),
+	})
+
+	return 0
 })()
 
 // Configures the URI

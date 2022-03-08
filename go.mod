@@ -20,6 +20,7 @@ require (
 require (
 	github.com/google/go-cmp v0.5.7 // indirect
 	github.com/joho/godotenv v1.4.0
+	github.com/kewlamogh/goth/metrics v0.0.0-20220307233750-8b88eb0da897
 	github.com/pkg/errors v0.9.1 // indirect
 	go.mongodb.org/mongo-driver v1.8.4
 )
