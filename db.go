@@ -4,10 +4,11 @@ import (
 	"context"
 	"os"
 	"time"
+
 	goenv "github.com/joho/godotenv"
+	"github.com/kewlamogh/goth/metrics"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	"github.com/kewlamogh/goth/metrics"
 )
 
 var URI = (func() string {
@@ -15,12 +16,12 @@ var URI = (func() string {
 	return os.Getenv("uri")
 })()
 
-var _ = (func () int { // runs this code on goth import	
+var _ = (func() int { // runs this code on goth import
 	now := time.Now()
 
 	metrics.ChangeGranularityOfOldHitMetrics(metrics.MonthData{
 		Month: now.Month().String(),
-		Year: uint32(now.Year()),
+		Year:  uint32(now.Year()),
 	})
 
 	return 0
