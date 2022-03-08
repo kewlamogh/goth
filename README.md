@@ -11,4 +11,11 @@ Feel free to add an issue, and if you have a fix, create a pull request. When de
 You can find a barebones application in the `example` directory. Checkout the repo, add your uri to the .env file, and then run index.go.
 
 # metrics
-Goth metrics are still WiP. 
+Goth metrics are still WiP, but as of now the only API methods are:
+```go
+TotalUsers() int64
+``` 
+and
+```go
+GetNumberOfHitsToProtectedRoutesInMonth(data MonthData) int64
+``` 

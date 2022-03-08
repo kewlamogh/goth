@@ -30,6 +30,8 @@ func TotalUsers() int64 {
 }
 
 // Gets the number of hits to a protected route in a given month.
+// Initializing the "Hits" property is redundant in this
+// function.
 func GetNumberOfHitsToProtectedRoutesInMonth(data MonthData) int64 {
 	client, ctx, close := connectToMongoDB()
 	hits := 0
